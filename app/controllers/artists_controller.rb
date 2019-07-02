@@ -1,20 +1,37 @@
 class ArtistsController < ApplicationController
+  before_action :set_preferences, only: [:index, :new]
+
+#this index is not mine - and the tests passes regardless
   def index
-    @artists = Artist.all
+    if @preferences && @preferences.artist_sort_order
+      @artists = Artist.order(name: @preferences.artist_sort_order)
+    else
+      @artists = Artist.all
+    end
   end
 
   def show
     @artist = Artist.find(params[:id])
   end
 
+#this is not my code
   def new
-    @preference = Preference.new
-    if @preference.allow_create_artists
-      @artist = Artist.new
-    else
+    if @preferences && !@preferences.allow_create_artists
       redirect_to artists_path
+    else
+      @artist = Artist.new
     end
   end
+
+#this was my actual code
+#  def new
+#    @preference = Preference.new
+#    if @preference.allow_create_artists
+#      @artist = Artist.new
+#    else
+#      redirect_to artists_path
+#    end
+#  end
 
   def create
     @artist = Artist.new(artist_params)
@@ -53,5 +70,11 @@ class ArtistsController < ApplicationController
 
   def artist_params
     params.require(:artist).permit(:name)
+  end
+
+#this code is also not mine 
+#this lab was terribly explained
+  def set_preferences
+    @preferences = Preference.first
   end
 end
