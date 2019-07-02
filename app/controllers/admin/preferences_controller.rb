@@ -1,5 +1,22 @@
 class Admin::PreferencesController < ApplicationController
 
+#the following code is not mine.
+#it's part of a very messy and poorly explained lab with even messier specs
+#the test passes even with a plain def index
+#this part has not been explained in any lesson.
   def index
+    @preference = Preference.first_or_create(allow_create_artists: true, allow_create_songs: true, song_sort_order: "DESC", artist_sort_order: "DESC")
+  end
+
+  def update
+    @preference = Preference.find(params[:id])
+    @preference.update(preference_params)
+    redirect_to admin_preferences_path
+  end
+
+  private
+
+  def preference_params
+    params.require(:preference).permit(:allow_create_songs, :allow_create_artists, :song_sort_order, :artist_sort_order)
   end
 end

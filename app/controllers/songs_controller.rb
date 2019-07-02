@@ -1,12 +1,20 @@
 class SongsController < ApplicationController
+  before_action :set_preferences, only: [:index, :new]
+
+#the index code is not mine. It's part of a poorly explained lab,
+#and I only realised it once submitted
   def index
     if params[:artist_id]
       @artist = Artist.find_by(id: params[:artist_id])
       if @artist.nil?
         redirect_to artists_path, alert: "Artist not found"
+      elsif @preferences && @preferences.song_sort_order
+        @songs = @artist.songs.order(title: @preferences.song_sort_order)
       else
         @songs = @artist.songs
       end
+    elsif @preferences && @preferences.song_sort_order
+      @songs = Song.order(title: @preferences.song_sort_order)
     else
       @songs = Song.all
     end
@@ -70,5 +78,9 @@ class SongsController < ApplicationController
 
   def song_params
     params.require(:song).permit(:title, :artist_name)
+  end
+
+  def set_preferences
+    @preferences = Preference.first
   end
 end
