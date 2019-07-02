@@ -1,4 +1,5 @@
 class SongsController < ApplicationController
+  before_action :set_preferences, only: [:index, :new]
 
 #the index code is not mine. It's part of a poorly explained lab,
 #and I only realised it once submitted
