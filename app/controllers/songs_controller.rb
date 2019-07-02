@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
 
-#the index code is not mine. It's part of a poorly explained lab, 
+#the index code is not mine. It's part of a poorly explained lab,
 #and I only realised it once submitted
   def index
     if params[:artist_id]
