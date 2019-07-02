@@ -1,8 +1,8 @@
 class Admin::PreferencesController < ApplicationController
 
 #the following code is not mine.
-#it's part of a very messy and poorly explained lab with even messier specs 
-#the test passes even with a plain def index 
+#it's part of a very messy and poorly explained lab with even messier specs
+#the test passes even with a plain def index
 #this part has not been explained in any lesson.
   def index
     @preference = Preference.first_or_create(allow_create_artists: true, allow_create_songs: true, song_sort_order: "DESC", artist_sort_order: "DESC")
