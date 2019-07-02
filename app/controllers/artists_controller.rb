@@ -72,7 +72,7 @@ class ArtistsController < ApplicationController
     params.require(:artist).permit(:name)
   end
 
-#this code is also not mine 
+#this code is also not mine
 #this lab was terribly explained
   def set_preferences
     @preferences = Preference.first
